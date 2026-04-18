@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "665557951925",
+    "project_id": "fresh-mart-b1428",
+    "storage_bucket": "fresh-mart-b1428.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:665557951925:android:9a9495276206ceec5b25fc",
+        "android_client_info": {
+          "package_name": "com.example.fresh_mart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "665557951925-0qbq6voei0dvht8u2dohiihrfm52f452.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fresh_mart",
+            "certificate_hash": "51c345cf0b615927600a0b2b562a2c65be41a087"
+          }
+        },
+        {
+          "client_id": "665557951925-edbdkrvc80e093vlpg9jd1g4oqosg9sa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXBZh7MvUpCV6kkq_1TqeXTsY3Y5b4eC8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "665557951925-edbdkrvc80e093vlpg9jd1g4oqosg9sa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

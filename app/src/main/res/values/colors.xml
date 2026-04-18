@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="green_primary">#307A59</color>
+    <color name="log_sign">#182B15</color>
+    <color name="link">#E3AFE6</color>
+    <color name="search">#807979</color>
+</resources>

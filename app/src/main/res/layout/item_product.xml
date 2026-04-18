@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardProduct"
+    android:layout_width="220dp"
+    android:layout_height="280dp"
+    android:layout_margin="8dp"
+    app:strokeWidth="0dp"
+    app:shapeAppearance="@style/ShapeAppearance.Material3.SmallComponent"
+    app:shapeAppearanceOverlay="@style/CustomShape">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- INNER CONTENT (with padding) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <!-- Favorite Icon -->
+            <ImageView
+                android:id="@+id/btnFav"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="end"
+                android:src="@drawable/favorite_icon"/>
+
+            <!-- Circle Background -->
+            <View
+                android:id="@+id/circleBg"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="0dp"
+                android:background="@drawable/bg_circle"/>
+
+            <!-- Product Image -->
+            <ImageView
+                android:id="@+id/imgProduct"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="-100dp"
+                android:scaleType="fitCenter"/>
+
+            <!-- Name -->
+            <TextView
+                android:id="@+id/txtName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#000"
+                android:layout_marginTop="10dp"/>
+
+            <!-- Description -->
+            <TextView
+                android:id="@+id/txtDesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#666"
+                android:textSize="12sp"
+                android:layout_marginTop="2dp"/>
+
+            <!-- Price -->
+            <TextView
+                android:id="@+id/txtPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:text="₹0"
+                android:layout_marginTop="6dp"/>
+
+        </LinearLayout>
+
+        <!-- ADD BUTTON (NO PADDING EFFECT) -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAdd"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:text="+"
+            android:textSize="22sp"
+            android:textColor="#FFFFFF"
+            app:shapeAppearanceOverlay="@style/CustomButtonShape"
+            android:insetLeft="0dp"
+            android:insetRight="0dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"/>
+
+    </RelativeLayout>
+
+</com.google.android.material.card.MaterialCardView>
