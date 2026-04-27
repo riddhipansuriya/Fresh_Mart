@@ -2,9 +2,9 @@
 <resources>
     <style name="CustomButtonShape">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSizeTopLeft">8dp</item>
+        <item name="cornerSizeTopLeft">16dp</item>
         <item name="cornerSizeTopRight">0dp</item>
         <item name="cornerSizeBottomLeft">0dp</item>
-        <item name="cornerSizeBottomRight">15dp</item>
+        <item name="cornerSizeBottomRight">20dp</item>
     </style>
 </resources>

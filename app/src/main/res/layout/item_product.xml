@@ -3,12 +3,15 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cardProduct"
-    android:layout_width="220dp"
+    android:layout_width="210dp"
     android:layout_height="280dp"
     android:layout_margin="8dp"
+    android:clipToOutline="false"
     app:strokeWidth="0dp"
     app:shapeAppearance="@style/ShapeAppearance.Material3.SmallComponent"
-    app:shapeAppearanceOverlay="@style/CustomShape">
+    app:shapeAppearanceOverlay="@style/CustomShape"
+    android:clickable="true"
+    android:focusable="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -27,7 +30,9 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="end"
-                android:src="@drawable/favorite_icon"/>
+                android:src="@drawable/favorite_icon"
+                android:clickable="true"
+                android:focusable="true"/>
 
             <!-- Circle Background -->
             <View
@@ -54,17 +59,21 @@
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:textColor="#000"
-                android:layout_marginTop="10dp"/>
+                android:textColor="@color/product"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/bricolagegrotesquelight"/>
 
             <!-- Description -->
             <TextView
                 android:id="@+id/txtDesc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#666"
+                android:textColor="@color/product"
                 android:textSize="12sp"
-                android:layout_marginTop="2dp"/>
+                android:layout_marginTop="2dp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:fontFamily="@font/bricolagegrotesquelight"/>
 
             <!-- Price -->
             <TextView
@@ -73,22 +82,36 @@
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
                 android:textStyle="bold"
+                android:textColor="@color/product"
+                android:fontFamily="@font/bricolagegrotesquelight"
                 android:text="₹0"
                 android:layout_marginTop="6dp"/>
 
         </LinearLayout>
 
-        <!-- ADD BUTTON (NO PADDING EFFECT) -->
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnAdd"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="0dp"
             android:text="+"
-            android:textSize="22sp"
-            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+
+            app:backgroundTint="@color/green_primary"
+
+            android:gravity="center"
+            android:padding="0dp"
+
+            app:iconPadding="0dp"
+
             app:shapeAppearanceOverlay="@style/CustomButtonShape"
+
             android:insetLeft="0dp"
             android:insetRight="0dp"
             android:insetTop="0dp"

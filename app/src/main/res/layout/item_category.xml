@@ -7,7 +7,9 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:gravity="center"
-    android:layout_margin="8dp">
+    android:layout_margin="8dp"
+    android:clickable="true"
+    android:focusable="true">
 
 
     <com.google.android.material.card.MaterialCardView
@@ -38,6 +40,6 @@
         android:fontFamily="@font/bricolagegrotesqueelight"
         android:textSize="16dp"
         android:layout_marginTop="8dp"
-        android:textColor="#000"/>
+        android:textColor="@color/product"/>
 
 </LinearLayout>
