@@ -7,10 +7,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.fresh_mart.dataclass.Category
-import com.example.fresh_mart.dataclass.Product
 import com.example.fresh_mart.adapter.CategoryAdapter
 import com.example.fresh_mart.adapter.ProductAdapter
+import com.example.fresh_mart.dataclass.Category
+import com.example.fresh_mart.dataclass.Product
+import com.example.fresh_mart.CartFragment
+import com.example.fresh_mart.WishlistFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -25,10 +27,14 @@ class MainActivity : AppCompatActivity() {
     private val productList = ArrayList<Product>()
 
     private lateinit var bottomNav: BottomNavigationView
+    private lateinit var homeLayout: View   // ✅ IMPORTANT
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // ✅ HOME LAYOUT
+        homeLayout = findViewById(R.id.homeLayout)
 
         // CATEGORY
         recyclerView = findViewById(R.id.recyclerCategories)
@@ -70,7 +76,6 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
 
-
                 else -> {
                     Toast.makeText(this, "Coming Soon", Toast.LENGTH_SHORT).show()
                     true
@@ -79,21 +84,21 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // ✅ FIXED HOME SHOW
     private fun showHome() {
-        findViewById<View>(R.id.recyclerCategories).visibility = View.VISIBLE
-        findViewById<View>(R.id.recyclerProducts).visibility = View.VISIBLE
+        homeLayout.visibility = View.VISIBLE
 
         supportFragmentManager.fragments.forEach {
             supportFragmentManager.beginTransaction().remove(it).commit()
         }
 
-        // 🔥 REFRESH WISHLIST STATE
         productAdapter.loadWishlist()
     }
 
+    // ✅ FIXED FRAGMENT LOAD
     private fun loadFragment(fragment: Fragment) {
-        findViewById<View>(R.id.recyclerCategories).visibility = View.GONE
-        findViewById<View>(R.id.recyclerProducts).visibility = View.GONE
+
+        homeLayout.visibility = View.GONE   // 🔥 THIS FIXES YOUR ISSUE
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer, fragment)
@@ -130,16 +135,11 @@ class MainActivity : AppCompatActivity() {
 
                 for (doc in result) {
                     val product = doc.toObject(Product::class.java)
-
-                    // ✅ IMPORTANT (FIXES EVERYTHING)
-                    product.id = doc.id
-
+                    product.id = doc.id   // ✅ IMPORTANT
                     productList.add(product)
                 }
 
                 productAdapter.notifyDataSetChanged()
-
-                // ✅ LOAD WISHLIST AFTER DATA
                 productAdapter.loadWishlist()
             }
             .addOnFailureListener {

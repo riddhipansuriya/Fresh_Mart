@@ -7,8 +7,7 @@ import android.view.*
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fresh_mart.R
-import com.example.fresh_mart.dataclass.WishlistItem
-import com.example.fresh_mart.dataclass.CartItem
+import com.example.fresh_mart.dataclass.*
 import com.example.fresh_mart.Database.FreshMart
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
@@ -19,6 +18,10 @@ class WishlistAdapter(
     private val context: Context
 ) : RecyclerView.Adapter<WishlistAdapter.ViewHolder>() {
 
+    private val db = FreshMart.getDatabase(context)
+    private val wishDao = db.wishlistDao()
+    private val cartDao = db.cartDao()
+
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val img: ImageView = view.findViewById(R.id.img)
         val name: TextView = view.findViewById(R.id.name)
@@ -28,94 +31,79 @@ class WishlistAdapter(
         val card: MaterialCardView = view.findViewById(R.id.rootCard)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_wishlist, parent, false)
-        return ViewHolder(view)
-    }
-
-    override fun getItemCount() = list.size
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = list[position]
 
         holder.name.text = item.name
         holder.price.text = "₹${item.price}"
 
-        // IMAGE
         val resId = context.resources.getIdentifier(
             item.image, "drawable", context.packageName
         )
         holder.img.setImageResource(resId)
 
-        // 🎨 CARD COLOR
         try {
             holder.card.setCardBackgroundColor(Color.parseColor(item.color))
-        } catch (e: Exception) {}
-
-        // 🎨 BUTTON COLOR
-        try {
             holder.cart.backgroundTintList =
                 ColorStateList.valueOf(Color.parseColor(item.btn_bg))
         } catch (e: Exception) {}
 
-        // DATABASE INSTANCE (CREATE ONCE)
-        val db = FreshMart.getDatabase(context)
-        val wishDao = db.wishlistDao()
-        val cartDao = db.cartDao()
-
-        // ❤️ REMOVE FROM WISHLIST
+        // ❤️ remove
         holder.fav.setOnClickListener {
             val pos = holder.adapterPosition
-            if (pos != RecyclerView.NO_POSITION) {
-                CoroutineScope(Dispatchers.IO).launch {
-                    wishDao.delete(item)
+            if (pos == RecyclerView.NO_POSITION) return@setOnClickListener
 
-                    withContext(Dispatchers.Main) {
-                        list.removeAt(pos)
-                        notifyItemRemoved(pos)
-                        Toast.makeText(context, "Removed from wishlist", Toast.LENGTH_SHORT).show()
-                    }
+            CoroutineScope(Dispatchers.IO).launch {
+                wishDao.delete(item)
+
+                withContext(Dispatchers.Main) {
+                    list.removeAt(pos)
+                    notifyItemRemoved(pos)
                 }
             }
         }
 
-        // 🛒 ADD TO CART + REMOVE FROM WISHLIST
+        // 🛒 add to cart
         holder.cart.setOnClickListener {
             val pos = holder.adapterPosition
-            if (pos != RecyclerView.NO_POSITION) {
+            if (pos == RecyclerView.NO_POSITION) return@setOnClickListener
 
-                CoroutineScope(Dispatchers.IO).launch {
+            CoroutineScope(Dispatchers.IO).launch {
 
-                    val existing = cartDao.getItem(item.id)
+                val existing = cartDao.getItem(item.id)
 
-                    if (existing != null) {
-                        existing.quantity += 1
-                        cartDao.update(existing)
-                    } else {
-                        cartDao.insert(
-                            CartItem(
-                                id = item.id,
-                                name = item.name,
-                                price = item.price,
-                                image = item.image,
-                                quantity = 1,
-                                color = item.color,
-                                btn_bg = item.btn_bg
-                            )
+                if (existing != null) {
+                    existing.quantity++
+                    cartDao.update(existing)
+                } else {
+                    cartDao.insert(
+                        CartItem(
+                            item.id, item.name,
+                            item.price, item.image,
+                            1, item.color, item.btn_bg
                         )
-                    }
+                    )
+                }
 
-                    // REMOVE FROM WISHLIST
-                    wishDao.delete(item)
+                wishDao.delete(item)
 
-                    withContext(Dispatchers.Main) {
-                        list.removeAt(pos)
-                        notifyItemRemoved(pos)
-                        Toast.makeText(context, "Added to cart", Toast.LENGTH_SHORT).show()
+                withContext(Dispatchers.Main) {
+                    val index = holder.adapterPosition
+                    if (index != RecyclerView.NO_POSITION) {
+                        list.removeAt(index)
+                        notifyItemRemoved(index)
                     }
+                    Toast.makeText(context, "Added to cart", Toast.LENGTH_SHORT).show()
                 }
             }
         }
+    }
+
+    override fun getItemCount() = list.size
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_wishlist, parent, false)
+        return ViewHolder(view)
     }
 }
