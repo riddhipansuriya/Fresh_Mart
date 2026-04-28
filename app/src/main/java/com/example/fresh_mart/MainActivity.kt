@@ -120,8 +120,8 @@ class MainActivity : AppCompatActivity() {
 
                 adapter.notifyDataSetChanged()
             }
-            .addOnFailureListener {
-                Toast.makeText(this, "Failed to load", Toast.LENGTH_SHORT).show()
+            .addOnFailureListener { e ->
+                Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
             }
     }
 
@@ -142,8 +142,8 @@ class MainActivity : AppCompatActivity() {
                 productAdapter.notifyDataSetChanged()
                 productAdapter.loadWishlist()
             }
-            .addOnFailureListener {
-                Toast.makeText(this, "Failed to load products", Toast.LENGTH_SHORT).show()
+            .addOnFailureListener { e ->
+                Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
             }
     }
 }

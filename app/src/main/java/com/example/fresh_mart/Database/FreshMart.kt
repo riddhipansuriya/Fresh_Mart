@@ -9,7 +9,7 @@ import com.example.fresh_mart.dataclass.CartItem
 
 @Database(
     entities = [WishlistItem::class, CartItem::class],
-    version = 2,
+    version = 4,
     exportSchema = false
 )
 abstract class FreshMart : RoomDatabase() {
